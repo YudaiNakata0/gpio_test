@@ -4,6 +4,12 @@ import time
 import os
 from std_msgs.msg import Empty, String
 
+flag = 0
+
+def callback(msg):
+    global flag
+    flag = 1
+
 def setup_gpio(input_num, output_num, path):
     # GPIOエクスポート
     if not os.path.exists(f"{path}/gpio{input_num}"):
@@ -46,6 +52,7 @@ if __name__ == "__main__":
     print("reading sensor value...")
     rospy.init_node("test_node")
     pub = rospy.Publisher("/read_sensor", String, queue_size=10)
+    rospy.Subscriber("/set_gpio", Empty, callback)
     setup_gpio(input_num, output_num, path)
     try:
         while not rospy.is_shutdown():
@@ -57,6 +64,13 @@ if __name__ == "__main__":
                 time.sleep(0.5)
                 output_off(output_num, path)
                 time.sleep(5.0)
+            elif flag == 1:
+                rospy.loginfo("subscribed topic")
+                output_on(output_num, path)
+                time.sleep(0.5)
+                output_off(output_num, path)
+                time.sleep(5.0)
+                flag = 0
             else:
                 time.sleep(0.5) 
             
