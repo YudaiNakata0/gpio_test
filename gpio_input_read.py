@@ -50,7 +50,7 @@ if __name__ == "__main__":
     output_num = 501
     path = "/sys/class/gpio"
     print("reading sensor value...")
-    rospy.init_node("test_node")
+    rospy.init_node("gpio_node")
     pub = rospy.Publisher("/read_sensor", String, queue_size=10)
     rospy.Subscriber("/set_gpio", Empty, callback)
     setup_gpio(input_num, output_num, path)
