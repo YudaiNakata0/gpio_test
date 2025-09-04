@@ -59,11 +59,11 @@ if __name__ == "__main__":
             value = input_read(input_num, path)
             if value == 1:
                 rospy.loginfo("GPIO %s input value: 1", input_num)
-                output_on(output_num, path)
+                #output_on(output_num, path)
                 publish(pub)
-                time.sleep(0.5)
-                output_off(output_num, path)
-                time.sleep(5.0)
+                #time.sleep(0.5)
+                #output_off(output_num, path)
+                #time.sleep(5.0)
             elif flag == 1:
                 rospy.loginfo("subscribed topic")
                 output_on(output_num, path)
