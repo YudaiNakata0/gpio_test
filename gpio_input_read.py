@@ -50,20 +50,21 @@ if __name__ == "__main__":
     output_num = 501
     path = "/sys/class/gpio"
     print("reading sensor value...")
-    rospy.init_node("gpio_node")
-    pub = rospy.Publisher("/read_sensor", String, queue_size=10)
-    rospy.Subscriber("/set_gpio", Empty, callback)
+    #rospy.init_node("gpio_node")
+    #pub = rospy.Publisher("/read_sensor", String, queue_size=10)
+    #rospy.Subscriber("/set_gpio", Empty, callback)
     setup_gpio(input_num, output_num, path)
     try:
         while not rospy.is_shutdown():
             value = input_read(input_num, path)
             if value == 1:
-                rospy.loginfo("GPIO %s input value: 1", input_num)
-                #output_on(output_num, path)
-                publish(pub)
-                #time.sleep(0.5)
-                #output_off(output_num, path)
-                #time.sleep(5.0)
+                #rospy.loginfo("GPIO %s input value: 1", input_num)
+                print("Contact\n")
+                output_on(output_num, path)
+                #publish(pub)
+                time.sleep(0.5)
+                output_off(output_num, path)
+                time.sleep(3.0)
             elif flag == 1:
                 rospy.loginfo("subscribed topic")
                 output_on(output_num, path)
